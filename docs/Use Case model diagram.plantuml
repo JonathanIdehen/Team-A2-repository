@@ -1,0 +1,29 @@
+@startuml
+left to right direction 
+
+package Virksomhed {
+actor Chef
+actor Medarbejder 
+}
+
+package Kunde {
+actor Lejer 
+}
+
+package UseCases {
+(Opret journal) as UC1
+(Opdater journaloplysninger) as UC2
+(Reserver en bil) as UC3
+(Book en reservation) as UC4 
+(Rengoer en bil) as UC5
+}
+
+Chef --> UC1
+Chef --> UC2
+Medarbejder --> UC3
+UC4 <-- Lejer
+Medarbejder --> UC5
+
+
+
+@enduml
