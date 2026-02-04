@@ -1,0 +1,25 @@
+@startuml
+
+
+class Journal {
+    Oprettelses dato 
+    Journal ID 
+    Bil Informationer 
+}
+
+class Chef {
+    Password
+}
+
+class Bil {
+    Katagori
+    Antal saeder 
+    Antal kilometer 
+    Farve 
+    Model
+    Nummerplade  
+}
+Chef "1" -- "1..*" Journal
+Journal "1" - "1" Bil 
+
+@enduml

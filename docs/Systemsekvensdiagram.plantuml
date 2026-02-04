@@ -1,0 +1,7 @@
+@startuml
+Chef -> System: Chef trykker opret journal
+Chef -> System: Chef giver Data (Dato, Model...) 
+Chef <-- System: System opretter journal i Database
+Chef <-- System: System respondere at det er gemt
+
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+
+class Journal {
+    {field} date: dateTime
+    journal_ID: int
+    category: String
+    seats: nit
+    kilometers: double
+    color: String
+    model: String 
+    nummerplade: String
+    {method} saveToFile(Path: String)
+
+}
+
+class Chef {
+    {field}password: String
+    {method}
+}
+
+Chef -- Journal
+
+@enduml
