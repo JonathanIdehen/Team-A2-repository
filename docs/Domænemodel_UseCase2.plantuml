@@ -1,0 +1,16 @@
+@startuml
+
+class Chef {    
+    Password
+}
+
+
+class Journal {
+    Journal ID
+    Bil Informationer
+    Aendrings dato
+}
+
+Chef "1" -- "1..*" Journal
+
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+
+class Medarbejder {
+    *
+}
+
+class Reservation {
+    Bil Katagori
+    Dato for reservation
+    Kunde informationer
+}
+
+class Bil {
+    Bil Katagori
+    Tilgaenglihed 
+    Journaler
+}
+
+Reservation "1" - "1" Bil
+Medarbejder "1..*" -- "1..*" Bil
+Medarbejder "1..*" -- "1..*" Reservation
+
+
+
+
+
+
+@enduml
