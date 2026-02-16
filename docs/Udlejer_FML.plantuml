@@ -1,0 +1,54 @@
+@startuml 
+hide methods 
+hide circle 
+package FML {
+
+class Nøglepartnere {
+hjemmesidder 
+}
+
+class Nøgleaktiviteter {
+udlejning 
+kundeservice 
+rengøring
+}
+
+class Nøgleressourcer {
+plads
+leje biler
+medarbejdere
+}
+
+class Værditilbud {
+billig/nem transport 
+}
+
+class Kunderelationer {
+personlig betjening 
+rengøring af blier efter hver brug
+}
+
+class Kanaler {
+:D
+}
+
+class Kundesegmenter {
+voksende 
+familier 
+}
+
+class Omkostningsstruktur {
+løn
+reperationer 
+køb af nye biler 
+vedligeholdelse 
+}
+
+class Indtægtsstrøm {
+udlejning
+forbrug over 100 km 
+}
+}
+
+
+@enduml
