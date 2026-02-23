@@ -1,0 +1,18 @@
+@startuml
+
+|#grey|x| Aktør1
+|#gold|y| Aktør2
+|x|
+start
+:tekst; 
+:tekst;
+:tekst;
+|y|
+:tekst;
+:tekst;
+:tekst;
+|x|
+:tekst;
+stop
+
+@enduml
