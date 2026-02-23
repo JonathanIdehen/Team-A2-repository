@@ -1,0 +1,31 @@
+@startuml
+
+hide methods
+hide circles
+
+class Bremsekaliber {
+    bremsekaliberID
+    bremsekaliberType
+}
+
+class Indgangskontrol {
+    bremsekaliberID
+    dato
+    antal
+}
+
+class Slutkontrol {
+    bremsekaliberID
+    dato
+    resultat
+    kommentar 
+    spild 
+    afgang
+}
+
+
+
+ Bremsekaliber "1..*" -- "1" Indgangskontrol 
+ Bremsekaliber "1..*" -- "1" Slutkontrol 
+
+@enduml
