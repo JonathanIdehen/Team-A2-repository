@@ -1,0 +1,31 @@
+@startuml
+<style>
+element {  
+    BackGroundColor: #dcdcdc;
+}
+
+sequenceDiagram {
+    arrow {
+        FontSize: 14;
+        HorizontalAlignment: center;
+    }
+
+}
+</style>
+
+Medarbejder -> System: Regristeringskontrol ()
+|||
+Medarbejder -> System: IndtastbremsekaliberID()
+|||
+Medarbejder <-- System: Bremsekaliber-typen
+|||
+Medarbejder -> System: GodkendBremsekaliber-typen()
+|||
+Medarbejder -> System: IndtastAntalBremsekalibre()
+|||
+Medarbejder -> System: IndtastDatoForIndgangskontrol()
+|||
+Medarbejder -> System: Gem()
+|||
+Medarbejder <-- System: Indgangskontrollen for bremsekaliberen er gemt
+@enduml
