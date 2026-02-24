@@ -1,0 +1,29 @@
+@startuml
+
+title UC3 – Få historik for bremsekalibre
+hide footbox
+
+<style>
+element {  
+    BackGroundColor: #dbd7d7;
+}
+sequenceDiagram {
+    arrow {
+        FontSize: 14;
+        HorizontalAlignment: center;
+    }
+}
+</style>
+
+actor ":Medarbejder" as M
+participant ":System" as S
+
+M -> S: registrerHistorikForBremsekaliber()
+|||
+
+M -> S: registrerBremsekaliberID()
+|||
+
+S --> M: visHistorikForBremsekaliber()
+
+@enduml

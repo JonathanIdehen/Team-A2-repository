@@ -1,0 +1,37 @@
+@startuml
+title UC2 – Registrer slutkontrol
+hide footbox
+<style>
+element {  
+    BackGroundColor: #e6e0e0;
+}
+
+sequenceDiagram {
+    arrow {
+        FontSize: 14;
+        HorizontalAlignment: center;
+    }
+
+}
+</style>
+
+actor ":Medarbejder" as M
+participant ":System" as S
+
+M -> S: vælgRegistrerSlutkontrol()
+M -> S: registrerMedarbejderID()
+M -> S: registrerBremsekaliberID()
+S --> M: BremsekaliberType
+M -> S: godkendBremsekaliberType()
+M -> S: registrerDatoSpildAfgang()
+
+alt Bremsekaliber godkendes
+  M -> S: godkend()
+  S --> M: Bremsekaliber markeret som godkendt
+else Bremsekaliber godkendes ikke
+  M -> S: godkendIkke()
+  S --> M: visListeOverFejlårsager()
+  M -> S: vaelgFejlårsag()
+  S --> M: Bremsekaliber markeret som ikke godkendt
+end
+@enduml

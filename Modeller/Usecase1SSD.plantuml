@@ -1,0 +1,37 @@
+@startuml
+title UC1 - Registrer indgangskontrol
+hide footbox
+<style>
+element {  
+    BackGroundColor: #ded7d7;
+}
+
+sequenceDiagram {
+    arrow {
+        FontSize: 14;
+        HorizontalAlignment: center;
+    }
+
+}
+</style>
+
+actor ":Medarbejder" as M
+participant ":System" as S
+
+M -> S: registrerIndgangskontrol()
+|||
+M -> S: registrerMedarbejderID()
+|||
+M -> S: registrerBremsekaliberID()
+|||
+S --> M: BremsekaliberTypen
+|||
+M -> S: godkendBremsekaliberTypen()
+|||
+M -> S: registrerDatoForIndgangskontrol()
+|||
+M -> S: gem()
+|||
+S --> M: Indgangskontrollen er gemt
+
+@enduml
