@@ -1,0 +1,19 @@
+@startuml
+
+class Class1 {
+    {field} x1: dateTime
+    x2: int
+    x3: String
+    x4: int
+    x5: double
+    {method} x6 (Path: String)
+}
+
+class Class2 {
+    {field}y1: string
+    {method}y2 (Patch: double)
+}
+
+Class1 -- Class2
+
+@enduml

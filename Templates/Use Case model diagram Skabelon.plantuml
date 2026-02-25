@@ -1,0 +1,29 @@
+@startuml
+left to right direction 
+
+package ForretningX {
+actor aktør1
+actor aktør2 
+}
+
+package KundeX {
+actor aktør3 
+}
+
+package UseCases {
+(UseCase 1) as UC1
+(UseCase 2) as UC2
+(UseCase 3) as UC3
+(UseCase 4) as UC4 
+(UseCase 5) as UC5
+}
+
+aktør1 --> UC1
+aktør1 --> UC2
+aktør2 --> UC3
+UC4 <-- aktør3
+aktør2 --> UC5
+
+
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+
+|#grey|m| Medarbejder
+|#gold|k| Kunde
+|k|
+start
+:start booking; 
+:vælg katagori;
+:vælg dato;
+:indsænd resevation;
+|m|
+:modtag resevation;
+:behandel resevation;
+:send faktura;
+|k|
+:modtag faktura;
+stop
+@enduml

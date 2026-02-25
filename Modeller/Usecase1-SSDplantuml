@@ -1,0 +1,25 @@
+@startuml
+title UC1 - Registrer indgangskontrol
+hide footbox
+skinparam sequenceMessageAlign center
+
+actor ":Medarbejder" as M
+participant ":System" as S
+
+M -> S: registrerIndgangskontrol()
+|||
+M -> S: indtastBremsekaliberID()
+|||
+S --> M: BremsekaliberTypen
+|||
+M -> S: godkendBremsekaliberTypen()
+|||
+M -> S: indtastAntalBremsekalibre()
+|||
+M -> S: indtastDatoForIndgangskontrol()
+|||
+M -> S: gem()
+|||
+S --> M: Indgangskontrollen er gemt
+
+@enduml

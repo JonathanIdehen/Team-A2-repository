@@ -1,0 +1,7 @@
+@startuml
+Aktør -> System: Aktør trykker x
+Aktør -> System: Aktør giver x (y, z...) 
+Aktør <-- System: System gør
+Aktør <-- System: System respondere
+
+@enduml
