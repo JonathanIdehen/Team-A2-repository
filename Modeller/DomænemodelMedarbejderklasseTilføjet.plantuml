@@ -1,0 +1,44 @@
+@startuml
+
+
+hide methods
+hide circles
+
+
+class Bremsekaliber {
+    bremsekaliberID
+    varenummer
+    bremsekaliberType
+    
+}
+
+
+class Indgangskontrol {
+    dato
+}
+
+
+class Slutkontrol {
+    dato
+    resultat
+    kommentar
+    spild
+    afgang
+}
+
+class Medarbejder {
+    medarbejderID
+}
+' Placering (tving layout)
+Bremsekaliber -[hidden]- Medarbejder
+Indgangskontrol -[hidden]- Slutkontrol
+Bremsekaliber -[hidden]down- Indgangskontrol
+Medarbejder   -[hidden]down- Slutkontrol
+
+ Bremsekaliber "1" -- "0..1" Indgangskontrol 
+ Bremsekaliber "1" -- "0..1" Slutkontrol 
+ Medarbejder "1" -- "0..*" Indgangskontrol 
+Medarbejder "1" -- "0..*" Slutkontrol     
+
+
+@enduml
