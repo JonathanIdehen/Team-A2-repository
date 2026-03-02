@@ -1,0 +1,51 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+
+class Employee {
+  + EmployeeID : int
+  --
+  + RegisterEmployeeID(employeeID:int)
+  + <<override>> ToString() : string
+}
+
+class Caliber {
+  + CaliberID : int
+  + ItemNumber : int
+  + CaliberType : string
+  --
+  + RegisterCaliberID(caliberID:int)
+  + RegisterItemNumber(itemNumber:int)
+  + <<override>> ToString() : string
+}
+
+class StartControl {
+  + Date : DateTime
+  --
+  + RegisterDate(date:DateTime)
+  + <<override>> ToString() : string
+}
+
+class FinalControl {
+  + Date : DateTime
+  + Result : boolean
+  + Comment : string
+  + Waste : int
+  + Export : int
+  --
+  + VerifyCaliberType(caliberType:string) : boolean
+  + VerifyCaliber(caliber:Caliber) : boolean
+  + RegisterDate(date:DateTime)
+  + AddComment(comment:string)
+  + RegisterWaste(waste:int)
+  + RegisterExport(export:int)
+  + <<override>> ToString() : string
+}
+
+Caliber "1" -- "0..1" StartControl
+Caliber "1" -- "0..1" FinalControl
+
+Employee "1" -- "0..*" StartControl
+Employee "1" -- "0..*" FinalControl
+
+@enduml
