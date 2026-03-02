@@ -1,0 +1,50 @@
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+
+class Caliper <<table>> {
+    {field} <<PK>> <<surrogate>> CaliperID : INT
+    ItemNumber : NVARCHAR(50)
+    CaliperType : NVARCHAR(50)
+    --
+    {method} <<PK>> PK_Caliper()
+}
+
+class Employee <<table>> {
+    {field} <<PK>> <<surrogate>> EmployeeID : INT
+    --
+    {method} <<PK>> PK_Employee()
+}
+
+class StartControl <<table>> {
+    {field} <<PK>> <<surrogate>> StartControlID : INT
+    Date : DATETIME2
+    {field} <<FK1>> CaliperID : INT
+    {field} <<FK2>> EmployeeID : INT
+    --
+    {method} <<PK>> PK_StartControl()
+    {method} <<FK1>> FK_StartControl_Caliper(CaliperID)
+    {method} <<FK2>> FK_StartControl_Employee(EmployeeID)
+}
+
+class FinalControl <<table>> {
+    {field} <<PK>> <<surrogate>> FinalControlID : INT
+    Date : DATETIME2
+    Result : Bit
+    Comment : NVARCHAR(255)
+    Waste : INT
+    Export : INT
+    {field} <<FK1>> CaliperID : INT
+    {field} <<FK2>> EmployeeID : INT
+    --
+    {method} <<PK>> PK_FinalControl()
+    {method} <<FK2>> FK_FinalControl_Caliper(CaliperID)
+    {method} <<FK2>> FK_FinalControl_Employee(EmployeeID)
+}
+
+Caliper "1" -- "0..1" StartControl
+Caliper "1" -- "0..1" FinalControl
+Employee "1" -- "0..*" StartControl
+Employee "1" -- "0..*" FinalControl
+
+@enduml
