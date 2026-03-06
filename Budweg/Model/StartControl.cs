@@ -8,7 +8,9 @@ namespace Budweg.Model
     {
         public int StartControlID { get; set; }
         public DateTime Date { get; set; }
-        
+        public int CaliperID { get; set; } // for at koble startkontrollen til en specifik kaliber
+        public int EmployeeID { get; set; } //  for at koble startkontrollen til en specifik medarbejder
+
         public StartControl(int startControlID) // Constructor
         {
             StartControlID = startControlID;
@@ -16,7 +18,7 @@ namespace Budweg.Model
 
         public override string ToString()
         {
-            return $"{StartControlID}, {Date}";
+            return $"{StartControlID}, {Date}, {CaliperID}, {EmployeeID}";
         }
     }
 }

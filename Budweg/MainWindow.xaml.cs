@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using Budweg.Model;
+using Budweg.Persistens;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +21,26 @@ namespace Budweg
         public MainWindow()
         {
             InitializeComponent();
+
+            FinalControlRepository repo = new FinalControlRepository();
+
+            FinalControl finalControl = new FinalControl
+            {
+                Date = DateTime.Now,
+                Result = true,
+                Comment = "Godkendt",
+                Waste = false,
+                Export = true,
+                CaliperID = 1,
+                EmployeeID = 1
+            };
+
+            repo.AddFinalControl(finalControl);
         }
+
+
     }
+
+
+
 }
