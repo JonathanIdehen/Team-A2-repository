@@ -9,7 +9,7 @@ namespace Budweg.Model
         public int FinalControlID { get; set; }
         public DateTime Date { get; set; }
         public bool Result { get; set; }
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         public bool Waste { get; set; }
         public bool Export { get; set; }
         public int CaliperID { get; set; } // for at koble slutkontrollen til en specifik kaliber

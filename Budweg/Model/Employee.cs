@@ -7,7 +7,11 @@ namespace Budweg.Model
     public class Employee
     {
         public int EmployeeID { get; set; }
-      
+
+        public Employee()
+        {
+        }
+
         public Employee(int employeeID) // Constructor
         {
             EmployeeID = employeeID;

@@ -1,0 +1,101 @@
+﻿<Window x:Class="Budweg.View.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Budweg.View"
+        mc:Ignorable="d"
+        Title="MenuWindow" Height="450" Width="800">
+    <Grid>
+        <TabControl>
+
+            <TabItem Header="Registrer bremsekaliber">
+                <Grid Margin="20">
+                    <StackPanel Width="350" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                        <TextBlock Text="BremsekaliberID:" Margin="0,0,0,5"/>
+                        <TextBox Text="{Binding CaliperViewModel.CaliperIDText, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <TextBlock Text="Varenummer:" Margin="0,0,0,5"/>
+                        <TextBox Text="{Binding CaliperViewModel.ItemNumberText, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <Button Content="Vis type"
+                    Height="35"
+                    Margin="0,0,0,15"
+                    Click="ShowCaliperType_Click"/>
+
+                        <TextBlock Text="Bremsekalibertype:" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding CaliperViewModel.CaliperTypeResult}" />
+
+                        <Button Content="Gem"
+                    Height="35"
+                    Click="SaveCaliper_Click"/>
+
+                        <TextBlock Text="{Binding CaliperViewModel.CaliperMessage}" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Registrer indgangskontrol">
+                <Grid>
+                    <TextBlock Text="Her skal indgangskontrol laves"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="20"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Registrer slutkontrol">
+                <Grid>
+                    <TextBlock Text="Her skal slutkontrol laves"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="20"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Få historik over bremsekalibre">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                        <TextBlock Text="BremsekaliberID:"
+                       VerticalAlignment="Center"
+                       Margin="0,0,10,0"/>
+
+                        <TextBox Width="150"
+                     Height="30"
+                     Margin="0,0,10,0"
+                     Text="{Binding HistoryViewModel.HistoryCaliperIdText, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <Button Content="Søg"
+                    Width="100"
+                    Height="30"
+                    Margin="0,0,10,0"
+                    Click="SearchHistory_Click" />
+
+                        <Button Content="Vis seneste"
+                    Width="100"
+                    Height="30"
+                    Click="ShowLatestHistory_Click" />
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="1"
+                   Text="{Binding HistoryViewModel.HistoryMessage}"
+                   Margin="0,0,0,10" />
+
+                    <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding HistoryViewModel.HistoryResults}"
+                  AutoGenerateColumns="True"
+                  IsReadOnly="True" />
+                </Grid>
+            </TabItem>
+
+
+        </TabControl>
+    </Grid>
+</Window>
