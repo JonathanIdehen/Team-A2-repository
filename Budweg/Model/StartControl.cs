@@ -11,6 +11,10 @@ namespace Budweg.Model
         public int CaliperID { get; set; } // for at koble startkontrollen til en specifik kaliber
         public int EmployeeID { get; set; } //  for at koble startkontrollen til en specifik medarbejder
 
+       public StartControl()
+        {
+        }
+
         public StartControl(int startControlID) // Constructor
         {
             StartControlID = startControlID;

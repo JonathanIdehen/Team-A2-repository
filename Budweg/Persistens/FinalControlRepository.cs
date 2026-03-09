@@ -11,8 +11,8 @@ namespace Budweg.Persistens
 {
         public class FinalControlRepository
         {
-            private readonly string connectionString;
-            private List<FinalControl> finalControls;
+            private readonly string connectionString; 
+            private List<FinalControl> finalControls; 
 
             public FinalControlRepository()
             {
@@ -21,7 +21,7 @@ namespace Budweg.Persistens
                     .Build();
 
                 finalControls = new List<FinalControl>();
-                connectionString = config.GetConnectionString("MyDBConnection");
+                connectionString = config.GetConnectionString("MyDBConnection")!;
             }
 
             public void AddFinalControl(FinalControl finalControl) // metode til at tilføje en final control til databasen
@@ -79,11 +79,14 @@ namespace Budweg.Persistens
                 return finalControls; // Returnerer listen med alle FinalControl objekter
         }
 
-            public List<FinalControl> GetFinalControlsByCaliperID(int caliperID)
-            {
-                List<FinalControl> resultList = new List<FinalControl>();
+        // en caliber kan kun have én slutkontrol
 
-                string query = @"SELECT FinalControlID, [Date], Result, Comment, Waste, Export, CaliperID, EmployeeID
+            public FinalControl? GetFinalControlByCaliperID(int caliperID) 
+
+        {
+            FinalControl? finalControl = null; // ? fordi det er muligt at der ikke findes en slutkontrol for den givne CaliperID, og i så fald vil metoden returnere null
+
+            string query = @"SELECT FinalControlID, [Date], Result, Comment, Waste, Export, CaliperID, EmployeeID
                              FROM FinalControl
                              WHERE CaliperID = @CaliperID";
 
@@ -95,9 +98,9 @@ namespace Budweg.Persistens
                 connection.Open();
                 using SqlDataReader reader = command.ExecuteReader();
 
-                while (reader.Read())
+                if (reader.Read())
                 {
-                    FinalControl finalControl = new FinalControl
+                    finalControl = new FinalControl
                     {
                         FinalControlID = Convert.ToInt32(reader["FinalControlID"]),
                         Date = Convert.ToDateTime(reader["Date"]),
@@ -108,11 +111,11 @@ namespace Budweg.Persistens
                         CaliperID = Convert.ToInt32(reader["CaliperID"]),
                         EmployeeID = Convert.ToInt32(reader["EmployeeID"])
                     };
+                finalControls.Add(finalControl); // Tilføjer det oprettede FinalControl objekt til finalControls listen
 
-                    resultList.Add(finalControl);
-                }
+            }
 
-                return resultList;
+            return finalControl; 
             }
         }
     }
