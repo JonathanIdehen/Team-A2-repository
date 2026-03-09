@@ -1,5 +1,6 @@
 ﻿using Budweg.Model;
 using Budweg.Persistens;
+using Budweg.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,120 +20,40 @@ namespace Budweg.View
     /// </summary>
     public partial class MenuWindow : Window
     {
-        private readonly CaliperRepository caliperRepository;
+        private readonly CaliperViewModel caliperViewModel;
+        private readonly HistoryViewModel historyViewModel;
+
+        public CaliperViewModel CaliperViewModel => caliperViewModel;
+        public HistoryViewModel HistoryViewModel => historyViewModel;
 
         public MenuWindow()
         {
             InitializeComponent();
-            caliperRepository = new CaliperRepository();
+            caliperViewModel = new CaliperViewModel();
+            historyViewModel = new HistoryViewModel();
+            DataContext = this;
+            historyViewModel.LoadLatestHistory();
 
-            LoadLatestHistory();
-        }
-
-        private void SearchHistory_Click(object sender, RoutedEventArgs e)
-        {
-            txtHistoryMessage.Text = "";
-            dgHistory.ItemsSource = null;
-
-            if (!int.TryParse(txtHistoryCaliperId.Text, out int caliperId))
-            {
-                txtHistoryMessage.Text = "BremsekaliberID skal være et tal.";
-                return;
-            }
-
-            Caliper? caliper = caliperRepository.GetCaliperById(caliperId);
-
-            if (caliper == null)
-            {
-                txtHistoryMessage.Text = "Der blev ikke fundet en bremsekaliber med det ID.";
-                return;
-            }
-
-            dgHistory.ItemsSource = new List<Caliper> { caliper };
-        }
-
-        private void ShowLatestHistory_Click(object sender, RoutedEventArgs e)
-        {
-            txtHistoryCaliperId.Clear();
-            LoadLatestHistory();
-        }
-
-        private void LoadLatestHistory()
-        {
-            txtHistoryMessage.Text = "";
-            dgHistory.ItemsSource = null;
-
-            List<Caliper> latestCalipers = caliperRepository.GetLatestCalipers();
-
-            dgHistory.ItemsSource = latestCalipers;
-
-            if (latestCalipers.Count == 0)
-            {
-                txtHistoryMessage.Text = "Der findes ingen bremsekalibre endnu.";
-            }
         }
 
         private void ShowCaliperType_Click(object sender, RoutedEventArgs e)
         {
-            txtCaliperMessage.Text = "";
-            txtCaliperTypeResult.Text = "";
-
-            if (!int.TryParse(txtCaliperId.Text, out int caliperId))
-            {
-                txtCaliperMessage.Text = "BremsekaliberID skal være et tal.";
-                return;
-            }
-
-            if (!int.TryParse(txtItemNumber.Text, out int itemNumber))
-            {
-                txtCaliperMessage.Text = "Varenummer skal være et tal.";
-                return;
-            }
-
-            Caliper caliper = new Caliper
-            {
-                CaliperID = caliperId,
-                ItemNumber = itemNumber
-            };
-
-            caliper.UpdateCaliperType();
-            txtCaliperTypeResult.Text = caliper.CaliperType;
+            caliperViewModel.ShowCaliperType();
         }
 
         private void SaveCaliper_Click(object sender, RoutedEventArgs e)
         {
-            txtCaliperMessage.Text = "";
-            txtCaliperTypeResult.Text = "";
+            caliperViewModel.SaveCaliper();
+        }
 
-            if (!int.TryParse(txtCaliperId.Text, out int caliperId))
-            {
-                txtCaliperMessage.Text = "BremsekaliberID skal være et tal.";
-                return;
-            }
+        private void SearchHistory_Click(object sender, RoutedEventArgs e)
+        {
+            historyViewModel.SearchHistory();
+        }
 
-            if (!int.TryParse(txtItemNumber.Text, out int itemNumber))
-            {
-                txtCaliperMessage.Text = "Varenummer skal være et tal.";
-                return;
-            }
-
-            Caliper caliper = new Caliper
-            {
-                CaliperID = caliperId,
-                ItemNumber = itemNumber
-            };
-
-            caliper.UpdateCaliperType();
-
-            if (caliper.CaliperType == "Ukendt type")
-            {
-                txtCaliperMessage.Text = "Varenummeret giver ikke en gyldig bremsekalibertype.";
-                return;
-            }
-
-            caliperRepository.AddCaliper(caliper);
-            txtCaliperTypeResult.Text = caliper.CaliperType;
-            txtCaliperMessage.Text = "Bremsekaliberen er gemt.";
+        private void ShowLatestHistory_Click(object sender, RoutedEventArgs e)
+        {
+            historyViewModel.LoadLatestHistory();
         }
     }
 }

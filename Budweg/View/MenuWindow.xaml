@@ -14,10 +14,10 @@
                     <StackPanel Width="350" HorizontalAlignment="Left" VerticalAlignment="Top">
 
                         <TextBlock Text="BremsekaliberID:" Margin="0,0,0,5"/>
-                        <TextBox x:Name="txtCaliperId" Height="30" Margin="0,0,0,15"/>
+                        <TextBox Text="{Binding CaliperViewModel.CaliperIDText, UpdateSourceTrigger=PropertyChanged}" />
 
                         <TextBlock Text="Varenummer:" Margin="0,0,0,5"/>
-                        <TextBox x:Name="txtItemNumber" Height="30" Margin="0,0,0,15"/>
+                        <TextBox Text="{Binding CaliperViewModel.ItemNumberText, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Button Content="Vis type"
                     Height="35"
@@ -25,18 +25,13 @@
                     Click="ShowCaliperType_Click"/>
 
                         <TextBlock Text="Bremsekalibertype:" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <TextBlock x:Name="txtCaliperTypeResult"
-                       Text=""
-                       Margin="0,0,0,20"
-                       FontSize="16"/>
+                        <TextBlock Text="{Binding CaliperViewModel.CaliperTypeResult}" />
 
                         <Button Content="Gem"
                     Height="35"
                     Click="SaveCaliper_Click"/>
 
-                        <TextBlock x:Name="txtCaliperMessage"
-                       Margin="0,20,0,0"
-                       TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding CaliperViewModel.CaliperMessage}" />
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -71,33 +66,34 @@
                         <TextBlock Text="BremsekaliberID:"
                        VerticalAlignment="Center"
                        Margin="0,0,10,0"/>
-                        <TextBox x:Name="txtHistoryCaliperId"
-                     Width="150"
+
+                        <TextBox Width="150"
                      Height="30"
-                     Margin="0,0,10,0"/>
+                     Margin="0,0,10,0"
+                     Text="{Binding HistoryViewModel.HistoryCaliperIdText, UpdateSourceTrigger=PropertyChanged}" />
+
                         <Button Content="Søg"
                     Width="100"
                     Height="30"
-                    Click="SearchHistory_Click"
-                    Margin="0,0,10,0"/>
+                    Margin="0,0,10,0"
+                    Click="SearchHistory_Click" />
+
                         <Button Content="Vis seneste"
                     Width="100"
                     Height="30"
-                    Click="ShowLatestHistory_Click"/>
+                    Click="ShowLatestHistory_Click" />
                     </StackPanel>
 
-                    <TextBlock x:Name="txtHistoryMessage"
-                   Grid.Row="1"
-                   Margin="0,0,0,15"
-                   TextWrapping="Wrap"/>
+                    <TextBlock Grid.Row="1"
+                   Text="{Binding HistoryViewModel.HistoryMessage}"
+                   Margin="0,0,0,10" />
 
-                    <DataGrid x:Name="dgHistory"
-                  Grid.Row="2"
+                    <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding HistoryViewModel.HistoryResults}"
                   AutoGenerateColumns="True"
-                  IsReadOnly="True"/>
+                  IsReadOnly="True" />
                 </Grid>
             </TabItem>
-
 
 
         </TabControl>
