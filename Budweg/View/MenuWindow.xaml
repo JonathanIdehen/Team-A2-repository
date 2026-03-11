@@ -19,6 +19,7 @@
                         <TextBlock Text="Varenummer:" Margin="0,0,0,5"/>
                         <TextBox Text="{Binding CaliperViewModel.ItemNumberText, UpdateSourceTrigger=PropertyChanged}" />
 
+
                         <Button Content="Vis type"
                     Height="35"
                     Margin="0,0,0,15"
@@ -37,20 +38,63 @@
             </TabItem>
 
             <TabItem Header="Registrer indgangskontrol">
-                <Grid>
-                    <TextBlock Text="Her skal indgangskontrol laves"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="20"/>
+                <Grid Margin="20">
+                    <StackPanel Width="350" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                        <TextBlock Text="BremsekaliberID:" Margin="0,0,0,5"/>
+                        <TextBox Text="{Binding StartControlViewModel.CaliperIDText, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <TextBlock Text="Dato:" Margin="0,10,0,5"/>
+                        <DatePicker SelectedDate="{Binding StartControlViewModel.ControlDate}" />
+
+                        <Button Content="Gem indgangskontrol"
+                    Height="35"
+                    Margin="0,20,0,10"
+                    Click="SaveStartControl_Click"/>
+
+                        <TextBlock Text="{Binding StartControlViewModel.Message}" />
+                    </StackPanel>
                 </Grid>
             </TabItem>
 
             <TabItem Header="Registrer slutkontrol">
-                <Grid>
-                    <TextBlock Text="Her skal slutkontrol laves"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="20"/>
+                <Grid Margin="20">
+                    <StackPanel Width="350" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                        <TextBlock Text="BremsekaliberID:" Margin="0,0,0,5"/>
+                        <TextBox Text="{Binding FinalControlViewModel.CaliperIDText, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <TextBlock Text="Dato:" Margin="0,10,0,5"/>
+                        <DatePicker SelectedDate="{Binding FinalControlViewModel.ControlDate}" />
+
+                        <TextBlock Text="Resultat:" Margin="0,10,0,5"/>
+                        <ComboBox SelectedValue="{Binding FinalControlViewModel.Result}"
+                      SelectedValuePath="Tag">
+                            <ComboBoxItem Content="Godkendt" Tag="True"/>
+                            <ComboBoxItem Content="Ikke godkendt" Tag="False"/>
+                        </ComboBox>
+
+                        <CheckBox Content="Spild"
+                      Margin="0,10,0,0"
+                      IsChecked="{Binding FinalControlViewModel.Waste}" />
+
+                        <CheckBox Content="Afgang"
+                      Margin="0,5,0,0"
+                      IsChecked="{Binding FinalControlViewModel.Export}" />
+
+                        <TextBlock Text="Kommentar:" Margin="0,10,0,5"/>
+                        <TextBox Text="{Binding FinalControlViewModel.Comment, UpdateSourceTrigger=PropertyChanged}"
+                     Height="80"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"/>
+
+                        <Button Content="Gem slutkontrol"
+                    Height="35"
+                    Margin="0,20,0,10"
+                    Click="SaveFinalControl_Click"/>
+
+                        <TextBlock Text="{Binding FinalControlViewModel.Message}" />
+                    </StackPanel>
                 </Grid>
             </TabItem>
 
@@ -89,9 +133,36 @@
                    Margin="0,0,0,10" />
 
                     <DataGrid Grid.Row="2"
-                  ItemsSource="{Binding HistoryViewModel.HistoryResults}"
-                  AutoGenerateColumns="True"
-                  IsReadOnly="True" />
+          ItemsSource="{Binding HistoryViewModel.HistoryResults}"
+          AutoGenerateColumns="False"
+          IsReadOnly="True">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="BremsekaliberID"
+                            Binding="{Binding CaliperID}" />
+
+                            <DataGridTextColumn Header="Varenummer"
+                            Binding="{Binding ItemNumber}" />
+
+                            <DataGridTextColumn Header="Dato for indgangskontrol"
+                            Binding="{Binding StartControlDate, StringFormat=dd-MM-yyyy HH:mm}" />
+
+                            <DataGridTextColumn Header="MedarbejderID for indgangskontrol"
+                            Binding="{Binding StartControlEmployeeID}" />
+
+                            <DataGridTextColumn Header="Dato for slutkontrol"
+                            Binding="{Binding FinalControlDate, StringFormat=dd-MM-yyyy HH:mm}" />
+
+                            <DataGridTextColumn Header="MedarbejderID for slutkontrol"
+                            Binding="{Binding FinalControlEmployeeID}" />
+
+                            <DataGridTextColumn Header="Resultat"
+                            Binding="{Binding ResultText}" />
+
+                            <DataGridTextColumn Header="Kommentar"
+                            Binding="{Binding Comment}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
 

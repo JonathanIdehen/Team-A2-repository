@@ -127,5 +127,157 @@ namespace Budweg.Persistens
 
             return latestCalipers;
         }
+
+        public List<CaliperHistory> GetLatestCaliperHistory()
+        {
+            List<CaliperHistory> historyList = new List<CaliperHistory>();
+
+            string query = @"
+    SELECT 
+        c.CaliperID,
+        c.ItemNumber,
+
+        sc.Date AS StartControlDate,
+        sc.EmployeeID AS StartControlEmployeeID,
+
+        fc.Date AS FinalControlDate,
+        fc.EmployeeID AS FinalControlEmployeeID,
+        fc.Result,
+        fc.Waste,
+        fc.Export,
+        fc.Comment
+
+    FROM Caliper c
+    LEFT JOIN StartControl sc ON c.CaliperID = sc.CaliperID
+    LEFT JOIN FinalControl fc ON c.CaliperID = fc.CaliperID
+    ORDER BY c.CaliperID DESC";
+
+            using SqlConnection connection = new SqlConnection(connectionString);
+            using SqlCommand command = new SqlCommand(query, connection);
+
+            connection.Open();
+            using SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                CaliperHistory history = new CaliperHistory
+                {
+                    CaliperID = Convert.ToInt32(reader["CaliperID"]),
+                    ItemNumber = Convert.ToInt32(reader["ItemNumber"]),
+
+                    StartControlDate = reader["StartControlDate"] == DBNull.Value
+         ? null
+         : Convert.ToDateTime(reader["StartControlDate"]),
+
+                    StartControlEmployeeID = reader["StartControlEmployeeID"] == DBNull.Value
+         ? null
+         : Convert.ToInt32(reader["StartControlEmployeeID"]),
+
+                    FinalControlDate = reader["FinalControlDate"] == DBNull.Value
+         ? null
+         : Convert.ToDateTime(reader["FinalControlDate"]),
+
+                    FinalControlEmployeeID = reader["FinalControlEmployeeID"] == DBNull.Value
+         ? null
+         : Convert.ToInt32(reader["FinalControlEmployeeID"]),
+
+                    ResultText = reader["Result"] == DBNull.Value
+         ? null
+         : (Convert.ToBoolean(reader["Result"]) ? "Godkendt" : "Ikke godkendt"),
+
+                    Waste = reader["Waste"] == DBNull.Value
+         ? null
+         : Convert.ToBoolean(reader["Waste"]),
+
+                    Export = reader["Export"] == DBNull.Value
+         ? null
+         : Convert.ToBoolean(reader["Export"]),
+
+                    Comment = reader["Comment"] == DBNull.Value
+         ? null
+         : reader["Comment"].ToString()
+                };
+
+                historyList.Add(history);
+            }
+
+            return historyList;
+        }
+
+        public CaliperHistory? GetCaliperHistoryById(int caliperID)
+        {
+            CaliperHistory? history = null;
+
+            string query = @"
+    SELECT 
+        c.CaliperID,
+        c.ItemNumber,
+
+        sc.Date AS StartControlDate,
+        sc.EmployeeID AS StartControlEmployeeID,
+
+        fc.Date AS FinalControlDate,
+        fc.EmployeeID AS FinalControlEmployeeID,
+        fc.Result,
+        fc.Waste,
+        fc.Export,
+        fc.Comment
+
+    FROM Caliper c
+    LEFT JOIN StartControl sc ON c.CaliperID = sc.CaliperID
+    LEFT JOIN FinalControl fc ON c.CaliperID = fc.CaliperID
+    WHERE c.CaliperID = @CaliperID";
+
+            using SqlConnection connection = new SqlConnection(connectionString);
+            using SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@CaliperID", caliperID);
+
+            connection.Open();
+            using SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                history = new CaliperHistory
+                {
+                    CaliperID = Convert.ToInt32(reader["CaliperID"]),
+                    ItemNumber = Convert.ToInt32(reader["ItemNumber"]),
+
+                    StartControlDate = reader["StartControlDate"] == DBNull.Value
+         ? null
+         : Convert.ToDateTime(reader["StartControlDate"]),
+
+                    StartControlEmployeeID = reader["StartControlEmployeeID"] == DBNull.Value
+         ? null
+         : Convert.ToInt32(reader["StartControlEmployeeID"]),
+
+                    FinalControlDate = reader["FinalControlDate"] == DBNull.Value
+         ? null
+         : Convert.ToDateTime(reader["FinalControlDate"]),
+
+                    FinalControlEmployeeID = reader["FinalControlEmployeeID"] == DBNull.Value
+         ? null
+         : Convert.ToInt32(reader["FinalControlEmployeeID"]),
+
+                    ResultText = reader["Result"] == DBNull.Value
+         ? null
+         : (Convert.ToBoolean(reader["Result"]) ? "Godkendt" : "Ikke godkendt"),
+
+                    Waste = reader["Waste"] == DBNull.Value
+         ? null
+         : Convert.ToBoolean(reader["Waste"]),
+
+                    Export = reader["Export"] == DBNull.Value
+         ? null
+         : Convert.ToBoolean(reader["Export"]),
+
+                    Comment = reader["Comment"] == DBNull.Value
+         ? null
+         : reader["Comment"].ToString()
+                };
+            }
+
+            return history;
+        }
     }
 }

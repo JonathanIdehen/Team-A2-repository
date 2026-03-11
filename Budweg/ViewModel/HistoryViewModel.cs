@@ -34,23 +34,23 @@ namespace Budweg.ViewModel
             }
         }
 
-        public ObservableCollection<Caliper> HistoryResults { get; set; } = new();
+        public ObservableCollection<CaliperHistory> HistoryResults { get; set; } = new();
 
         public void LoadLatestHistory()
         {
             HistoryMessage = "";
             HistoryResults.Clear();
 
-            List<Caliper> latestCalipers = caliperRepository.GetLatestCalipers();
+            List<CaliperHistory> latestHistory = caliperRepository.GetLatestCaliperHistory();
 
-            foreach (Caliper caliper in latestCalipers)
+            foreach (CaliperHistory history in latestHistory)
             {
-                HistoryResults.Add(caliper);
+                HistoryResults.Add(history);
             }
 
             if (HistoryResults.Count == 0)
             {
-                HistoryMessage = "Der findes ingen bremsekalibre endnu.";
+                HistoryMessage = "Der findes ingen historik endnu.";
             }
         }
 
@@ -65,15 +65,15 @@ namespace Budweg.ViewModel
                 return;
             }
 
-            Caliper? caliper = caliperRepository.GetCaliperById(caliperId);
+            CaliperHistory? history = caliperRepository.GetCaliperHistoryById(caliperId);
 
-            if (caliper == null)
+            if (history == null)
             {
-                HistoryMessage = "Der blev ikke fundet en bremsekaliber med det ID.";
+                HistoryMessage = "Der blev ikke fundet historik for det ID.";
                 return;
             }
 
-            HistoryResults.Add(caliper);
+            HistoryResults.Add(history);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
