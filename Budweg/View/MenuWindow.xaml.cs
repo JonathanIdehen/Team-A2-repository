@@ -51,9 +51,6 @@ namespace Budweg.View
             mainViewModel.StartControlViewModel.SaveStartControl();
         }
 
-        private void SaveFinalControl_Click(object sender, RoutedEventArgs e)
-        {
-            mainViewModel.FinalControlViewModel.SaveFinalControl();
-        }
+        
     }
 }

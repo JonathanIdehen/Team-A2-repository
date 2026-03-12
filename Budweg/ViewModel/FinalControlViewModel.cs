@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Budweg.Model;
+using Budweg.Persistens;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
-using Budweg.Model;
-using Budweg.Persistens;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Windows.Input;
 
 namespace Budweg.ViewModel
 {
@@ -13,6 +14,8 @@ namespace Budweg.ViewModel
         private readonly FinalControlRepository finalControlRepository = new();
         private readonly int employeeID;
 
+        public ICommand SaveFinalControlCommand { get; }
+
         private string caliperIDText = "";
         private DateTime? controlDate = DateTime.Now;
         private bool result;
@@ -20,6 +23,8 @@ namespace Budweg.ViewModel
         private bool export;
         private string comment = "";
         private string message = "";
+
+        
 
         public int EmployeeID => employeeID;
 
@@ -68,6 +73,7 @@ namespace Budweg.ViewModel
         public FinalControlViewModel(int employeeID)
         {
             this.employeeID = employeeID;
+            SaveFinalControlCommand = new RelayCommand(SaveFinalControl);
         }
 
         public void SaveFinalControl()

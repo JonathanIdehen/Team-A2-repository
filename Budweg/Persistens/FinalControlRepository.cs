@@ -24,29 +24,26 @@ namespace Budweg.Persistens
                 connectionString = config.GetConnectionString("MyDBConnection")!;
             }
 
-            public void AddFinalControl(FinalControl finalControl) // metode til at tilføje en final control til databasen
+        public void AddFinalControl(FinalControl finalControl) 
         {
-                string query = @"INSERT INTO FinalControl 
-                            ([Date], Result, Comment, Waste, Export, CaliperID, EmployeeID) 
-                            VALUES
-                            (@Date, @Result, @Comment, @Waste, @Export, @CaliperID, @EmployeeID)"; // SQL query til at indsætte en ny final control i databasen
+            using SqlConnection connection = new SqlConnection(connectionString);
+            using SqlCommand command = new SqlCommand("AddFinalControl", connection); 
 
-            using SqlConnection connection = new SqlConnection(connectionString); // Opretter en forbindelse til databasen
-            using SqlCommand command = new SqlCommand(query, connection); // Opretter en SQL kommando med den tidligere definerede query og forbindelsen
+            command.CommandType = CommandType.StoredProcedure;  // Angiver, at kommandoen er en stored procedure
 
-            command.Parameters.AddWithValue("@Date", finalControl.Date); // Tilføjer Date parameter
-            command.Parameters.AddWithValue("@Result", finalControl.Result); // Tilføjer Result parameter
-            command.Parameters.AddWithValue("@Comment", (object?)finalControl.Comment ?? DBNull.Value); // Tilføjer Comment parameter, håndterer null værdier ved at bruge DBNull.Value
-            command.Parameters.AddWithValue("@Waste", finalControl.Waste); // Tilføjer Waste parameter
-            command.Parameters.AddWithValue("@Export", finalControl.Export); // Tilføjer Export parameter
-            command.Parameters.AddWithValue("@CaliperID", finalControl.CaliperID); // Tilføjer CaliperID parameter
-            command.Parameters.AddWithValue("@EmployeeID", finalControl.EmployeeID); // Tilføjer EmployeeID parameter
+            command.Parameters.AddWithValue("@Date", finalControl.Date);
+            command.Parameters.AddWithValue("@Result", finalControl.Result);
+            command.Parameters.AddWithValue("@Comment", (object?)finalControl.Comment ?? DBNull.Value);
+            command.Parameters.AddWithValue("@Waste", finalControl.Waste);
+            command.Parameters.AddWithValue("@Export", finalControl.Export);
+            command.Parameters.AddWithValue("@CaliperID", finalControl.CaliperID);
+            command.Parameters.AddWithValue("@EmployeeID", finalControl.EmployeeID);
 
-            connection.Open(); // Åbner forbindelsen til databasen
-            command.ExecuteNonQuery(); // Udfører SQL kommandoen, i dette tilfælde en INSERT, som ikke returnerer nogen data, derfor bruges ExecuteNonQuery
+            connection.Open();
+            command.ExecuteNonQuery();
         }
 
-            public List<FinalControl> GetAllFinalControls() // metode til at hente alle slutkontroller fra databasen
+        public List<FinalControl> GetAllFinalControls() // metode til at hente alle slutkontroller fra databasen
         {
                 finalControls.Clear(); 
 
@@ -84,7 +81,7 @@ namespace Budweg.Persistens
             public FinalControl? GetFinalControlByCaliperID(int caliperID) 
 
         {
-            FinalControl? finalControl = null; // ? fordi det er muligt at der ikke findes en slutkontrol for den givne CaliperID, og i så fald vil metoden returnere null
+            FinalControl? finalControl = null;
 
             string query = @"SELECT FinalControlID, [Date], Result, Comment, Waste, Export, CaliperID, EmployeeID
                              FROM FinalControl
@@ -94,7 +91,6 @@ namespace Budweg.Persistens
                 using SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@CaliperID", caliperID);
-
                 connection.Open();
                 using SqlDataReader reader = command.ExecuteReader();
 
@@ -111,7 +107,6 @@ namespace Budweg.Persistens
                         CaliperID = Convert.ToInt32(reader["CaliperID"]),
                         EmployeeID = Convert.ToInt32(reader["EmployeeID"])
                     };
-                finalControls.Add(finalControl); // Tilføjer det oprettede FinalControl objekt til finalControls listen
 
             }
 

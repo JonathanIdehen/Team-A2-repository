@@ -91,7 +91,7 @@
                         <Button Content="Gem slutkontrol"
                     Height="35"
                     Margin="0,20,0,10"
-                    Click="SaveFinalControl_Click"/>
+                    Command="{Binding FinalControlViewModel.SaveFinalControlCommand}"/>
 
                         <TextBlock Text="{Binding FinalControlViewModel.Message}" />
                     </StackPanel>
