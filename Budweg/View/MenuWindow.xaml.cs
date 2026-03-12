@@ -15,45 +15,42 @@ using System.Windows.Shapes;
 
 namespace Budweg.View
 {
-    /// <summary>
-    /// Interaction logic for MenuWindow.xaml
-    /// </summary>
     public partial class MenuWindow : Window
     {
-        private readonly CaliperViewModel caliperViewModel;
-        private readonly HistoryViewModel historyViewModel;
+        private readonly MainViewModel mainViewModel;
 
-        public CaliperViewModel CaliperViewModel => caliperViewModel;
-        public HistoryViewModel HistoryViewModel => historyViewModel;
-
-        public MenuWindow()
+        public MenuWindow(Employee activeEmployee)
         {
             InitializeComponent();
-            caliperViewModel = new CaliperViewModel();
-            historyViewModel = new HistoryViewModel();
-            DataContext = this;
-            historyViewModel.LoadLatestHistory();
-
+            mainViewModel = new MainViewModel(activeEmployee);
+            DataContext = mainViewModel;
         }
 
         private void ShowCaliperType_Click(object sender, RoutedEventArgs e)
         {
-            caliperViewModel.ShowCaliperType();
+            mainViewModel.CaliperViewModel.ShowCaliperType();
         }
 
         private void SaveCaliper_Click(object sender, RoutedEventArgs e)
         {
-            caliperViewModel.SaveCaliper();
+            mainViewModel.CaliperViewModel.SaveCaliper();
         }
 
         private void SearchHistory_Click(object sender, RoutedEventArgs e)
         {
-            historyViewModel.SearchHistory();
+            mainViewModel.HistoryViewModel.SearchHistory();
         }
 
         private void ShowLatestHistory_Click(object sender, RoutedEventArgs e)
         {
-            historyViewModel.LoadLatestHistory();
+            mainViewModel.HistoryViewModel.LoadLatestHistory();
         }
+
+        private void SaveStartControl_Click(object sender, RoutedEventArgs e)
+        {
+            mainViewModel.StartControlViewModel.SaveStartControl();
+        }
+
+        
     }
 }

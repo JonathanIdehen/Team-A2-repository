@@ -13,17 +13,15 @@
                        TextAlignment="Center"
                        Margin="0,0,0,20" Width="231"/>
 
-            <TextBox x:Name="txtEmployeeId"
+            <TextBox Text="{Binding EmployeeIdText, UpdateSourceTrigger=PropertyChanged}"
                      Height="30"
                      Margin="0,0,0,10"/>
 
-            <Button Content="Tjek ind"
+            <Button Content="Tjek ind" Click="CheckIn_Click"
                     Height="35"
-                    Click="CheckIn_Click"
                     Margin="0,0,0,10"/>
 
-            <TextBlock x:Name="txtMessage"
-                       Text=""
+            <TextBlock Text="{Binding Message}"
                        TextAlignment="Center"
                        TextWrapping="Wrap"/>
         </StackPanel>
